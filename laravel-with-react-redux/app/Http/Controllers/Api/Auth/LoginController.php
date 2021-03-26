@@ -4,12 +4,9 @@ namespace App\Http\Controllers\Api\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
-use App\Providers\RouteServiceProvider;
 use App\Traits\Api\ApiResponser;
 use App\Traits\Api\ApiServices;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
-use Laravel\Passport\Passport;
 
 class LoginController extends Controller
 {
@@ -25,13 +22,6 @@ class LoginController extends Controller
     */
 
     use ApiResponser, ApiServices;
-
-    /**
-     * Where to redirect users after login.
-     *
-     * @var string
-     */
-    protected $redirectTo = RouteServiceProvider::HOME;
 
     /**
      * Create a new controller instance.
@@ -52,7 +42,7 @@ class LoginController extends Controller
      */
     public function login(LoginRequest $request)
     {
-        if (!$this->guard()->attempt($request->validated()))
+        if (!Auth::attempt($request->validated()))
         {
             return $this->error('Credentials mismatch');
         }

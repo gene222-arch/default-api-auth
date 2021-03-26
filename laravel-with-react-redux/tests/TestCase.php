@@ -9,11 +9,11 @@ abstract class TestCase extends BaseTestCase
 {
     use CreatesApplication;
 
-    public function __construct()
+    protected function setUp(): void
     {
         parent::setUp();
-
-        $this->actingAs(User::first(), 'api');
+        
+        // $this->actingAs(User::first(), 'api');
         $this->withoutExceptionHandling();
     }
 
@@ -42,8 +42,8 @@ abstract class TestCase extends BaseTestCase
 
     /**
      * 
-     * @param integer @code
      * @param [type] $response
+     * @param integer @code
      * @return void
      */
     protected function assertResponse($response, int $code = 200)

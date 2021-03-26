@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Api\Auth;
 
+use Illuminate\Http\Request;
+use App\Traits\Api\ApiResponser;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\ResetsPasswords;
@@ -19,12 +21,26 @@ class ResetPasswordController extends Controller
     |
     */
 
-    use ResetsPasswords;
+    use ResetsPasswords, ApiResponser;
 
     /**
-     * Where to redirect users after resetting their password.
-     *
-     * @var string
+     * Reset password success message
+     * 
+     * @return Illuminate\Http\JsonResponse
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+    protected function sendResetResponse(Request $request, $response)
+    {
+        return $this->success([], trans($response));
+    }
+
+    
+    /**
+     * Reset password error message
+     * 
+     * @return Illuminate\Http\JsonResponse
+     */
+    protected function sendResetFailedResponse(Request $request, $response)
+    {
+        return $this->error(trans($response), 422);
+    }
 }

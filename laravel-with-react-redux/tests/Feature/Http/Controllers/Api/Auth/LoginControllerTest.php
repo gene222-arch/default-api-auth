@@ -13,11 +13,11 @@ class LoginControllerTest extends TestCase
     {
         $data = [
             'email' => 'genephillip222@gmail.com',
-            'password' => 'admin'
+            'password' => 'administrator'
         ];
 
         $response = $this->post('/api/auth/login', $data, $this->apiHeader());
 
-        $this->assertResponse($response, 201);
+        $this->assertResponse($response);
     }
 }

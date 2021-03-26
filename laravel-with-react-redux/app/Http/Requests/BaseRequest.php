@@ -33,7 +33,7 @@ class BaseRequest extends FormRequest
         if ($this->expectsJson())
         {
             throw new HttpResponseException(
-                $this->error($validator->errors()), 422);
+                $this->error($validator->errors(), 422));
         }
     }
 

@@ -14,7 +14,7 @@ trait ApiResponser
      * @param integer $code
      * @return \Illuminate\Http\JsonResponse
      */
-	public function token($personalAccessToken, $data = null, $message = null, $code = 200)
+	public function token($personalAccessToken, $message = null, $data = null, $code = 200)
 	{
 		$tokenData = [
 			'access_token' => $personalAccessToken->accessToken,

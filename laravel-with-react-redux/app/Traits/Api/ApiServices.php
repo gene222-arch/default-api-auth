@@ -14,23 +14,21 @@ trait ApiServices
      * 
      * @return string
      */
-    public function getPersonalAccessToken($request)
+    protected function getPersonalAccessToken($request)
     {
         if ($request->remember_me === 'true')
         {
             Passport::personalAccessTokensExpireIn(Carbon::now()->addDays(15));
         }
 
-        return $this->guard()
-            ->user()
-            ->createToken(env('PERSONAL_ACCESS_TOKEN'));
+        return $this->guard()->user()->createToken(env('PERSONAL_ACCESS_TOKEN'));
     }
 
 
     /**
      * Guard
      */
-    public function guard()
+    protected function guard()
     {
         return Auth::guard();
     }

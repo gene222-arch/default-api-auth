@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\Auth\RegisterRequest;
-
+use App\Traits\Api\ApiServices;
 
 class RegisterController extends Controller
 {
@@ -25,7 +25,7 @@ class RegisterController extends Controller
     |
     */
 
-    use ApiResponser;
+    use ApiResponser, ApiServices;
 
     /**
      * Where to redirect users after registration.
@@ -54,12 +54,13 @@ class RegisterController extends Controller
     public function register(RegisterRequest $request)
     {
         User::create([
-            'name' => $request->name,
+            'firstName' => $request->firstName,
+            'lastName' => $request->lastName,
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
 
-        if (!$this->guard()->attempt($request->only('email', 'password')))
+        if (!Auth::attempt($request->only('email', 'password')))
         {
             return $this->error('Credentials mismatch', 401);
         }
