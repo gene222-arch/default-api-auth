@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Controllers\Api\Auth\ForgotPasswordController;
+use App\Http\Controllers\Api\Auth\LoginController;
+use App\Http\Controllers\Api\Auth\RegisterController;
+use App\Http\Controllers\Api\Auth\ResetPasswordController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,6 +18,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+
+/**
+ * Authentication
+ */
+Route::group(['prefix' => 'auth'], function () 
+{
+    Route::post('/login', [LoginController::class, 'login']);
+    Route::post('/register', [RegisterController::class, 'register']);
+
+    Route::prefix('forgot-password')->group(function () 
+    {
+        Route::post('/email', [ForgotPasswordController::class, 'sendResetLinkEmail']);
+        Route::post('/reset', [ResetPasswordController::class, 'reset']);
+    });
+
+    Route::middleware('auth:api')->post('/log-out', [LoginController::class, 'logout']);
 });
