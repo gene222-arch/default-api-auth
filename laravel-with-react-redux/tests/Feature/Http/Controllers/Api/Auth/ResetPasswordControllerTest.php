@@ -6,17 +6,20 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
-class ForgotPasswordControllerTest extends TestCase
+class ResetPasswordControllerTest extends TestCase
 {
     /** @test */
-    public function user_can_request_forgot_password_via_email()
+    public function user_can_reset_password()
     {
         $data = [
-            'email' => 'genephillip222@gmail.com'
+            'email' => 'genephillip222@gmail.com',
+            'token' => '',
+            'password' => '',
+            'password_confirmation' => ''
         ];
 
         $response = $this->post(
-            '/api/forgot-password/email',
+            '/api/forgot-password/reset',
             $data,
             $this->apiHeader()
         );
